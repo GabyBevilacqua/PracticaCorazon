@@ -24,8 +24,8 @@ Pistas:
 */
 
 
-const asciiHeart = [
-    "⣠⣤⣶⣶⣦⣄⡀  ⠀⢀⣤⣴⣶⣶⣤⣀",
+ const asciiHeart = [
+    " ⣠⣤⣶⣶⣦⣄   ⠀⢀⣤⣴⣶⣶⣤", 
     "⣼⣿⣿⣿⣿⣿⣿⣷⣤⣾⣿⣿⣿⣿⣿⣿⣧",
     "⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿",
     "⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠏",
@@ -35,14 +35,51 @@ const asciiHeart = [
     "⠀      ⠙⠻⠁"
 ]
 
-
-
 const animateByChart = (ms) => {
+    let currentIndex = 0;                                   // contador global para todos los caracteres 
+    asciiHeart.forEach((linea, liIndex) => {            //para q recorra cada linea (liIndex queda nombrado pero no se esta usando, se puede poner cualquier nombre cuando esta sin uso)
+        linea.split('').forEach((char, charIndex) => {    // .split para convertir cada linea en un array para q vayan uno a uno (charIndex queda nombrado pero no se esta usando, se puede poner cualquier nombre)
+            setTimeout(() => {                            // char en el lugar que determina el string, puede ser cualquier nombre q escoja
+                process.stdout.write(char);              // se usa para que no haya salto de linea porque lo ve como un objeto en cambio consol.log los imprimiria uno debajo del otro
+            }, ms * currentIndex);                      // por el tiempo para el caracter entre caracter
+            currentIndex++;                               // Incrementa el índice global para el siguiente carácter
+        });
+                                                // aqui esto para que siga la misma proporcion de tiempo que lleva entre caracteres pero para ir de linea a linea
+       setTimeout(() => {
+            console.log('');                             // aqui esto para hacer el salto de linea despues que termina cada una
+       }, ms * currentIndex);
+        currentIndex++;                                 // esto para que siga con las demas lineas hasta la ultima
+   });
+  };
 
-}
+/*
+    let currentIndex = 0;                                   
+    asciiHeart.forEach((linea, liIndex) => {            
+        linea.split('').forEach((char, charIndex) => {     
+            setTimeout(() => {                           
+                process.stdout.write(char);
+                if(charIndex === linea.split('').length -1){       tambien se puede poner asi y funciona igual
+                    process.stdout.write('\n')                     if llega al final de la linea pasa a la siguiente con el mismo tiempo dado para los caract
+                    }             
+            }, ms * currentIndex);                      
+            currentIndex++;                               
+        })                                
+   });
+*/
 
 const animateByLine = (ms) => {
 
+ /*   asciiHeart.forEach((linea, index) => {                 tambien se puede poner asi y debe funcionar igual
+        setTimeout(() => {                                   
+            console.log(linea);  
+        }, ms * index);  
+    });
+}; */
+    for(let i = 0; i < asciiHeart.length; i++){            // para que lea cada linea como un todo (index) y pase a la siguiente
+        setTimeout(() => {
+            console.log(asciiHeart[i])}, ms * i);          // aqui si cons.log para que salte de linea a linea indicando i(index) y se multiplica el tiempo        
+    }
 }
-
-// animateByChart()
+   animateByChart(100)
+   // animateByLine(500)
+ 
